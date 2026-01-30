@@ -20,6 +20,7 @@ Orden echo:
 - Pedir datos al usuario
 - Operaciones aritméticas básicas
 - Recuperar el resultado de una operación
+- Variables de entorno
 
 ### Condicionales
 

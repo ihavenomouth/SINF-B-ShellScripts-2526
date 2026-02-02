@@ -5,4 +5,15 @@
 
 
 
+if [ $# -ne 2 ];then
+  echo "Error: El número de parámetros del script debe ser exactamente dos." 1>&2
+  exit 1
+fi
 
+# Si llego a esta línea, es que se reciben exáctamente dos parámetros,
+# se mostrará por pantalla el menor de los dos
+if [ $1 -lt $2 ];then
+  echo "$1"
+else
+  echo "$2"
+fi

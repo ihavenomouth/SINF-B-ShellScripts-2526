@@ -22,7 +22,12 @@ Orden echo:
 - Recuperar el resultado de una operación
 - Variables de entorno
 
+### Redirecciones
+- Redirección simple
+
 ### Condicionales
+
+
 
 ### Orden exit
 - Códigos de error

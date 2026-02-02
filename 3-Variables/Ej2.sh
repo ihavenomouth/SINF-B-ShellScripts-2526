@@ -9,14 +9,15 @@
 # - Mostrará el mensaje "Proceso finalizado"
 
 clear
-echo -n "Introduzca la primera extensión: "
+
+echo -n "Introduce una extensión: "
 read ext1
 
-echo -n "Introduzca la segunda extensión: "
+echo -n "Introduce otra extensión: "
 read ext2
-
 
 ls -l *.$ext1 *.$ext2 > listado.txt
 
 date
+
 echo "Proceso finalizado"

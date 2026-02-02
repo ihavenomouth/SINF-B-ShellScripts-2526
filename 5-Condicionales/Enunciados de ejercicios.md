@@ -4,6 +4,7 @@
 
 ## Ejercicio de saludo
 Crea un script llamado saludo.sh que reciba dos parámetros: un nombre y un rol (profesor, alumno, administrador, etc.).
+Comprueba que se han recibido exactamente dos parámetros. Si no es así muestra un mensaje de error y termina la ejecución del script.
 El script debe imprimir: "Hola [nombre], eres [rol]".
 Debe mostrar cuántos argumentos ha recibido el usuario en total.
 Debe imprimir un mensaje de despedida en una línea diferente.
@@ -35,6 +36,8 @@ Crea un script llamado simulabackup.sh que simule la creación de una copia de s
 
 Crea una copia del script llamado simulabackup.sh y modificala para la creación de una copia de seguridad:
 * El script recibirá una extensión como primer parámetro (por ejemplo sh)
+* Si no se recibe exactamente un parámetro, muestra un mensaje de error y termina.
+* Si el primer parámetro es --help muestra un mensaje de ayuda y termina.
 * Imprime un mensaje que indique la extensión que se va a usar, por ejemplo "Se va a realizar una copia de los ficheros sh" 
 * Muestra por pantalla el mensaje: "Procesando el archivo backup.tar.gz..." sin saltar de línea (usa la opción -n de echo).
 * Usa la orden tar para generar un fichero comprimido: `tar -czf backup.tar.gz *.$1`

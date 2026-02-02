@@ -40,13 +40,13 @@
 #   código3
 # fi
 
-if [ "$1" == "Javier" ]; then
-  echo "Hola, Javier"
-elif [ "$1" == "Paco" ]; then
-  echo "Hola, Paco"
-else
-  echo "Hola ciudadano anónimo"
-fi
+# if [ "$1" == "Javier" ]; then
+#   echo "Hola, Javier"
+# elif [ "$1" == "Paco" ]; then
+#   echo "Hola, Paco"
+# else
+#   echo "Hola ciudadano anónimo"
+# fi
 
 
 # -------------------------------------------------
@@ -58,6 +58,11 @@ fi
 # "Hola" == "Hola"
 # "Hola" != "Hola"
 
+# Ejemplo:
+# if [ "$1" == "--help" ];then
+#   echo "Ayuda"
+# fi
+
 # Condiciones de números
 # ------------------------------------
 # 5 -eq 6       --> equal
@@ -67,11 +72,26 @@ fi
 # 5 -lt 6       --> less than
 # 5 -le 6       --> less than or equal
 
+# Ejemplo:
+# if [ $# -gt 2 ];then
+#   echo "No se puede recibir más de 2 parámetros" 1>&2
+# fi
+
+
 # Condiciones de ficheros y directorios
 # -------------------------------------
 # -f "fichero"   --> si existe un fichero llamado "fichero"
 # -d "dir"       --> si existe un directorio llamado "directorio"
 # -e "cosa"      --> si existe un directorio o fichero llamado "cosa"
+
+
+# Ejemplo:
+# if [ ! -f "datos" ];then
+#   echo "No existe un fichero llamado datos" 1>&2
+# else
+#   cat datos
+# fi
+
 
 # Condiciones de permisos
 # -------------------------------------
@@ -82,4 +102,11 @@ fi
 # if [ ! -w "info.txt" ];then
 #   echo "Error: no tiene permisos de escritura sobre el fichero info.txt" 1>&2
 # fi
+
+
+
+# -------------------------------------
+# Condiciones Complejas: and, or y not
+# -------------------------------------
+
 

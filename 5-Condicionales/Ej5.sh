@@ -13,3 +13,14 @@
 
 # Si todo ha ido bien mostrará un mensaje de despedida alegre: (˶ᵔ ᵕ ᵔ˶)
 
+if [ $# -ne 1 ];then
+  echo "Error" 1>&2
+  exit 1
+fi
+
+if [ "$1" == "--help" ];then
+  echo "Ayuda"
+  exit 0
+fi
+
+date

@@ -1,0 +1,82 @@
+#!/bin/bash
+
+
+# Crea un fichero llamado systeminfo y añadelo a ~/.local/bin, acuérdate de asignarle permisos de ejecución para el usuario actual con chmod u+x systeminfo. Utiliza estos ficheros, órdenes y variables de entorno en el script para mostrar información del sistema al usuario.
+
+# Nota: algunos de estos ficheros puede que no existan, ¿sabrías comprobarlo?
+
+# Haz que la información se muestre bonita en pantalla. Una manera de lograrlo si la terminal soporta el uso del color es esta:
+
+# echo -en "\033[1;36;7mSaludo:\033[0m ";
+# echo "Hola caracola"
+
+# Pruébalo y adáptalo a tus necesidades. Cambia el 36 por un 32, 31, 35...
+
+# echo -en "\033[32mDespedida:\033[0m "
+# echo "Hasta luego"
+
+# Pruébalo y adáptalo a tus necesidades. Cambia el 32 por un 37, 31, 35...
+
+
+
+
+
+# Nombre y versión de la distribución:
+# grep "^PRETTY_NAME=" /etc/os-release | cut -d'"' -f2
+
+# Nota: si no existe ese fichero se puede usar /lsb/release
+
+# Corriente y batería:
+# /sys/class/power_supply/AC/online
+# (1 o 0 dependiendo de si está o no conectado a la red)
+# Haz que se muestre "Conectado a la red" o "No conectado"
+
+# /sys/class/power_supply/BAT0/status
+# (discharging, charging)
+# Haz que se muestre un mensaje de "Cargando la batería" o "Usando la batería"
+
+# /sys/class/power_supply/BAT0/capacity
+# Añadir un % a la capacidad actual de la batería
+
+# Temperatura: añadirle el símbolo
+# /sys/class/hwmon/hwmon1/device/temp
+
+
+# Dispositivos Bluetooth conectados:
+# bluetoothctl devices Connected
+
+# Dispositivos emparejados
+# bluetoothctl devices
+
+# direcciones IP:
+# ip -brief a show
+
+# Nombre del equipo y del usuario
+# $HOSTNAME
+# $USER
+
+# Espacio en disco:
+# df -h | grep "^/dev/"
+
+# Información sobre la memoria en megabytes:
+# free --mega
+
+# Información sobre las CPU:
+# lscpu -e=CPU,MODELNAME,MHZ,MAXMHZ,MINMHZ
+
+
+# Carga de trabajo (1 minuto, 5 minutos, 15 minutos):
+# cat /proc/loadavg | cut -d" " -f1
+# cat /proc/loadavg | cut -d" " -f2
+# cat /proc/loadavg | cut -d" " -f3
+
+# tiempo de funcionamiento de la sesión:
+# uptime -p
+
+# Versión del núcleo de Linux:
+# uname -r
+
+# Brillo de la pantalla (en un portátil):
+# /sys/class/backlight/intel_backlight/brightness
+# /sys/class/backlight/intel_backlight/max_brightness
+

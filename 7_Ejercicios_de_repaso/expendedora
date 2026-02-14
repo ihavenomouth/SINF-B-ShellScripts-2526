@@ -1,0 +1,56 @@
+#!/bin/bash
+
+
+# ## Ejercicio: máquina expendedora
+# Una máquina expendedora de Pepsi utiliza un sistema curioso para funcionar, utiliza un shell script que pregunta al usuario su nombre y el número de bebidas que quiere y le muestra el coste de la operación. Cada bebida costará 1.55 €.
+# Sin embargo han añadido un _easter egg_ si el nombre es "Sara" simplemente responderá "Gracias, Sara. ¡Siguiente!".
+
+echo -n "Introduce tu nombre: "
+read nombre
+
+# Comprobamos si el nombre es Sara, por el easter egg
+if [ "$nombre" == "Sara" ];then
+  echo "Gracias, Sara. ¡Siguiente!"
+  exit 0
+fi
+
+echo -n "Nº de bebidas: "
+read numBebidas
+
+# Comprobamos si el número de bebidas es un número correcto
+./esNum $numBebidas
+if [ $? -eq 1 ];then
+  echo "Lo siento, $numBebidas no es un número correcto."
+  exit 1
+fi
+
+total=$( echo "scale=2; 1.55 * $numBebidas" | bc -l )
+echo "Total: $total €"
+
+echo "Gracias $nombre. Siguiente cliente, por favor."
+
+
+
+
+# ```sh
+# $ ./expendedora
+# Introduce tu nombre: Ana
+# Nº de bebidas: 4
+# Total: 6.20 €
+# Gracias Ana. Siguiente cliente, por favor.
+
+# $ ./expendedora
+# Introduce tu nombre: Sara
+# Gracias, Sara. ¡Siguiente!
+
+# $ ./expendedora
+# Introduce tu nombre: Juan
+# Nº de bebidas: 2
+# Total: 3.10 €
+# Gracias Juan. Siguiente cliente, por favor.
+
+# $ ./expendedora
+# Introduce tu nombre: Garrulo
+# Nº de bebidas: trece
+# Lo siento, trece no es un número correcto.
+# ```

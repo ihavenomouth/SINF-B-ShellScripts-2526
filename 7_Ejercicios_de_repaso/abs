@@ -1,0 +1,78 @@
+#!/bin/bash
+
+
+
+# ## Ejercicio: valor absoluto  
+# Escribe un script llamado `abs` que devuelva el valor absoluto del número que recibe.  
+#   * Comprueba que recibe exactamente un parámetro. Si no recibe parámetros o recibe más de un parámetro, haz que se muestre una ayuda y termine.
+#   * La ayuda se mostrará también si el primer parámetro es --help.
+#   * Si recibe una cadena de caracteres haz que devuelva el número 0. Apóyate en el script `esNum` que creaste antes.
+#   * Devuelve el valor absoluto del número que se ha pasado como primer parámetro.
+
+
+# ```sh
+# $ ./abs 1
+# 1
+
+# $ ./abs -134
+# 134
+
+# $ ./abs "gato"
+# Error: Debe indicar un número como parámetro
+# ```
+
+
+function ayuda(){
+  echo "Devuelve el valor absoluto de un número."
+  echo "Si se le pasa como parámetro algo que no sea un número se devuelve 0."
+  echo
+  echo "USO: $0 num"
+  echo
+  echo "Parámetros:"
+  echo "     num  : el número al que se quiere calcular su valor absoluto"
+  echo "   --help : muestra esta ayuda"
+  echo
+  echo "Ejemplos de uso:"
+  echo "$0 -45"
+  echo "45"
+  echo
+  echo "$0 patata"
+  echo 0
+}
+
+
+if [ $# -eq 0 ];then
+  ayuda
+  exit 1
+fi
+
+# [ $# -eq 0 ] && ayuda && exit 1
+
+if [ $# -ge 2 ];then
+  ayuda
+  exit 1
+fi
+
+# Si llego aquí es porque hay exactamente un parámetro
+if [ "$1" == "--help" ];then
+  ayuda
+  exit 0
+fi
+
+# Si llego aquí es porque hay un parámetro y no es --help
+# ejecuto el script de apoyo esNum para ver si ese primer parámetro
+# es un número o no
+./esNum $1
+
+if [ $? -eq 1 ];then
+  echo 0
+  exit 0
+fi
+
+
+# Si llego aquí es porque hay un único parámetro y es un número
+if [ $1 -ge 0 ];then
+  echo $1
+else
+  echo $(( $1 * -1 ))
+fi

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+
+# ## Ejercicio: edad
+# Crea un script llamado `edad` que reciba el año de nacimiento de una persona y calcule su edad, además le indicará cuántos años faltan para que cumpla 50. Evidentemente si la persona tiene 55 años le indicará los años que hace que cumplió 50.
+
+# *Nota:* para saber el año actual se puede ejecutar `date +%Y`
+
+if [ $# -ne  1 ];then
+  echo "Debe indicar su año de nacimiento como primer parámetro" 1>&2
+  exit 1
+fi
+
+./esNumEntero $1
+if [ $? -eq 1 ];then
+  echo "El año de nacimiento debe ser un número entero" 1>&2
+  exit 1
+fi
+
+
+annoActual=$( date +%Y )
+annoNacimiento=$1
+
+annosDelUsuario=$(( $annoActual - $annoNacimiento ))
+
+echo "Tienes $annosDelUsuario años."
+
+if [ $annosDelUsuario -lt 50 ];then
+  quedan=$(( 50 - $annosDelUsuario ))
+  echo "Cumplirás los 50 dentro de $quedan años"
+  exit 0
+else
+  cumplio=$(( $annosDelUsuario - 50 ))
+  echo "Cumpliste los 50 hace $cumplio años"
+fi
+
+
+# ```sh
+# $ ./edad
+# Debe añadir su edad como parámetro.
+
+# $ ./edad 2000
+# Tienes 26 años.
+# Cumplirás los 50 dentro de 24 años.
+
+# $ ./edad 1970
+# Tienes 56 años.
+# Cumpliste los 50 hace 6 años.
+# ```

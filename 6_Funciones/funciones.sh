@@ -41,17 +41,54 @@
 #-----------------------------
 # Lo que imprime por pantalla una función es lo que devuelve
 
-function media(){
-  primerNum=$1
-  segundoNum=$2
-  tercerNum=$3
+# function media(){
+#   primerNum=$1
+#   segundoNum=$2
+#   tercerNum=$3
 
-  echo "($primerNum + $segundoNum + $tercerNum)/3" | bc -l
+#   echo "($primerNum + $segundoNum + $tercerNum)/3" | bc -l
+# }
+
+
+
+# resultado=$( media 57 76 123 )
+
+# echo "El resultado es $resultado"
+
+
+
+#----------------------
+# Variables globales
+#----------------------
+
+# function f(){
+#   letrab="letra b"  # esto es una varaible global
+#   echo "$letraa"
+# }
+
+# letraa="letra a"
+
+# f
+# echo $letrab
+
+#----------------------
+# Variables locales
+#----------------------
+
+# function f(){
+#   local letrab="letra b"  # esto es una varaible local
+#   echo "$letraa"
+# }
+
+# letraa="letra a"
+
+# f
+# echo $letrab
+
+
+
+function ls(){
+  echo "Hola caracola"
 }
 
-
-
-resultado=$( media 57 76 123 )
-
-echo "El resultado es $resultado"
-
+ls

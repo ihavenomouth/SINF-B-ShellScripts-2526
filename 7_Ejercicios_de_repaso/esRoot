@@ -1,0 +1,19 @@
+#!/bin/bash   
+
+
+## Ejercicio: esRoot
+# Crea un script llamado `esRoot` que no reciba parámetros. Su función es verificar los privilegios del usuario que lo ejecuta. Utiliza la variable de entorno `$EUID`. En sistemas Linux, el usuario `root` siempre tiene el ID `0`.
+#   * Si el usuario es `root`, debe mostrar "root".
+#   * Si no es root, debe mostrar el contenido de la varaible de entorno $USER
+
+
+
+# Si recibe algún parámetro, lo ignoramos.
+if [ $EUID -eq 0 ];then
+  echo "root"
+else
+  echo "$USER"
+fi
+
+
+

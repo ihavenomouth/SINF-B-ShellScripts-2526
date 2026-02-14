@@ -1,0 +1,123 @@
+#!/bin/bash
+
+## Ejercicio: control de gastos
+# Crea un script llamado `controlgastos` que reciba uno o dos parámetros.  
+#   * Si recibe más parámetros mostrará un mensaje de error y terminará.
+#   * Si no recibe parámetros mostrará un mensaje de error y terminará.
+#   * Si recibe un único parámetro y es `--help` mostrará un mensaje de ayuda y terminará.
+#   * Si recibe un único parámetro y es `lista` mostrará el contenido del fichero `gastos.txt`. Si el fichero no existe mostrará un mensaje indicándolo.
+#   * Si recibe un único parámetro y es `borrar` eliminará el fichero `gastos.txt`.
+#   * Si recibe un único parámetro y no es `lista` ni `--help` ni `borrar` mostrará un mensaje de error y terminará.
+#   * Si recibe dos parámetros comprobará que el primero es un número, si no es así mostrará un mensaje de error y terminará.
+#   * En caso contrario guardará los datos al final de un fichero llamado `gastos.txt`. Si este fichero no existe, lo creará.
+
+# *Nota:* Si quieres que quede tabulado perfectamente puedes usar `printf "%7d" 245` en lugar de `echo "245"`. Eso añade los espacios necesarios para que el `245` ocupe 7 caracteres, es decir, imprimirá `    245`.
+
+
+
+
+###############################
+# FUNCTIONS
+################################
+
+function errorNumParametros(){
+  echo "Número de parámetros incorrecto" 1>&2
+  exit 1
+}
+
+function errorParametroIncorrecto(){
+  echo "El parámetro indicado no es correcto. Ejecute $0 --help para ver la ayuda" 1>&2
+  exit 3
+}
+
+
+function ayuda(){
+  echo "Gestión de gastos personales"
+  echo
+  echo "USO: $0 lista|borrar|--help"
+  echo "USO: $0 cantidad concepto"
+  echo
+  echo "Parámetros:"
+  echo "  lista   : muestra los gastos guardados"
+  echo "  borrar  : borra todos los gastos"
+  echo "  --help  : muestra esta ayuda"
+  echo " cantidad : cantidad en euros (debe ser un número)"
+  echo "concepto  : concepto del gasto (ejemplo: desayuno)"
+  exit 0
+}
+
+
+
+function lista(){
+  if [ -f "gastos.txt" ];then
+    cat gastos.txt
+    exit 0
+  fi
+
+  echo "Error: no existe el fichero de gastos (gastos.txt)" 1>&2
+  exit 2
+}
+
+
+
+function borrar(){
+  rm gastos.txt 2>/dev/null
+  exit 0
+}
+
+
+function compruebaSiEsNumero(){
+  ./esNum $1
+  if [ $? -eq 1 ];then
+    echo "Error: si hay dos paraḿetros, el primero tiene que ser un número" 1>&2
+    exit 4 
+  fi
+}
+
+
+
+###############################
+# MAIN
+################################
+
+
+[ $# -gt 2 ] && errorNumParametros
+[ $# -eq 0 ] && errorNumParametros
+
+#sabemos que recibe uno o dos parámetros
+[ $# -eq 1 ] && [ "$1" == "--help" ] && ayuda
+
+[ $# -eq 1 ] && [ "$1" == "lista" ] && lista
+
+[ $# -eq 1 ] && [ "$1" == "borrar" ] && borrar
+
+[ $# -eq 1 ] && errorParametroIncorrecto
+
+[ $# -eq 2 ] && compruebaSiEsNumero $1
+
+
+
+echo "$1 $2" >> gastos.txt
+
+# ```sh
+# $ ./controlgastos
+# Error: número de parámetros incorrecto. Use --help para ver la ayuda.
+
+# $ ./controlgastos gato zorro
+# Error: el primer parámetro debe ser un número.
+
+# $ ./controlgastos 12 "móvil"
+# $ ./controlgastos 160 "compra en el supermercado"
+# $ ./controlgastos 55 "electricidad"
+
+# $ ./controlgastos lista
+#    Gastos | Concepto
+# ---------------------------------
+#      12 € | móvil
+#     160 € | compra en el supermercado
+#      55 € | electricidad
+
+# $ ./controlgastos borrar
+# $ ./controlgastos lista
+# No hay datos que mostrar.
+# ```

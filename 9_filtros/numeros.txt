@@ -1,0 +1,8 @@
+1 ana 1256
+2 gato 156
+3 loro 786
+4 perro 654
+50 pescado 23
+5 triana 908
+11 zorro 67
+6 mono 345

@@ -1,61 +1,78 @@
 #!/bin/bash
 
-## Ejercicio: control de gastos
-# Crea un script llamado `controlgastos` que reciba uno o dos parámetros.  
-#   * Si recibe más parámetros mostrará un mensaje de error y terminará.
-#   * Si no recibe parámetros mostrará un mensaje de error y terminará.
-#   * Si recibe un único parámetro y es `--help` mostrará un mensaje de ayuda y terminará.
-#   * Si recibe un único parámetro y es `lista` mostrará el contenido del fichero `gastos.txt`. Si el fichero no existe mostrará un mensaje indicándolo.
-#   * Si recibe un único parámetro y es `borrar` eliminará el fichero `gastos.txt`.
-#   * Si recibe un único parámetro y no es `lista` ni `--help` ni `borrar` mostrará un mensaje de error y terminará.
-#   * Si recibe dos parámetros comprobará que el primero es un número, si no es así mostrará un mensaje de error y terminará.
-#   * En caso contrario guardará los datos al final de un fichero llamado `gastos.txt`. Si este fichero no existe, lo creará.
-
-# *Nota:* Si quieres que quede tabulado perfectamente puedes usar `printf "%7d" 245` en lugar de `echo "245"`. Eso añade los espacios necesarios para que el `245` ocupe 7 caracteres, es decir, imprimirá `    245`.
 
 
-
-
-###############################
+#######################
 # FUNCTIONS
-################################
-
-function errorNumParametros(){
-  echo "Número de parámetros incorrecto" 1>&2
+################
+function errorParametros(){
+  echo "Error, nº de parámetros incorrecto." 1>&2
+  echo "Con --help se mostrará la ayuda." 1>&2
   exit 1
 }
 
-function errorParametroIncorrecto(){
-  echo "El parámetro indicado no es correcto. Ejecute $0 --help para ver la ayuda" 1>&2
+
+function errorPrimerParametro(){
+  echo "Error, el primer parámetro ($1) no es válido." 1>&2
+  echo "Con --help se mostrará la ayuda." 1>&2
+  exit 2
+}
+
+function errorPrimerParametroNoEsUnNumero(){
+  echo "Error, el primer parámetro no es un número" 1>&2
   exit 3
 }
 
 
-function ayuda(){
-  echo "Gestión de gastos personales"
-  echo
-  echo "USO: $0 lista|borrar|--help"
-  echo "USO: $0 cantidad concepto"
-  echo
-  echo "Parámetros:"
-  echo "  lista   : muestra los gastos guardados"
-  echo "  borrar  : borra todos los gastos"
-  echo "  --help  : muestra esta ayuda"
-  echo " cantidad : cantidad en euros (debe ser un número)"
-  echo "concepto  : concepto del gasto (ejemplo: desayuno)"
-  exit 0
+
+
+
+function error(){
+  case $1 in
+    1) echo "Error, nº de parámetros incorrecto.";;
+    2) echo "Error, el primer parámetro no es válido." 1>&2;;
+    3) echo "Error, el primer parámetro no es un número" 1>&2;;
+    4) echo "Error, blablabalbalbalba" 1>&2;;
+    *) echo "Error indefinido" 1>&2
+  esac
+
+  echo "Con --help se mostrará la ayuda." 1>&2
+  exit $1
 }
 
 
 
+function ayuda(){
+  echo "Permite llevar el control de los gastos básicos."
+  echo
+  echo "Uso: $0 --help|lista|borrar"
+  echo "Uso: $0 cantidad concepto"
+  echo
+  echo "Parámetros:"
+  echo "   --help    : muestra esta ayuda"
+  echo "   lista     : muestra los gastos almacenados"
+  echo "   borrar    : borra todos los gastos almacenados"
+  echo "   cantidad  : el coste del concepto de gasto (por ejemplo: 14)"
+  echo "   concepto  : el gasto que se desea almacenar (por ejemplo: gasolina)"
+  echo
+  echo "Ejemplo:"
+  echo "$0 160 \"compra en el supermercado\""
+  exit 0
+}
+
+
 function lista(){
+  # Si recibe un único parámetro y es `lista` mostrará el contenido del fichero `gastos.txt`. Si el fichero no existe mostrará un mensaje indicándolo.
+  
   if [ -f "gastos.txt" ];then
+    echo "   Gastos | Concepto"
+    echo "----------|-------------------"
     cat gastos.txt
-    exit 0
+  else
+    echo "El fichero de gastos (gastos.txt) no existe todavía";
   fi
 
-  echo "Error: no existe el fichero de gastos (gastos.txt)" 1>&2
-  exit 2
+  exit 0
 }
 
 
@@ -66,38 +83,41 @@ function borrar(){
 }
 
 
-function compruebaSiEsNumero(){
-  ./esNum $1
-  if [ $? -eq 1 ];then
-    echo "Error: si hay dos paraḿetros, el primero tiene que ser un número" 1>&2
-    exit 4 
-  fi
-}
 
-
-
-###############################
+#######################
 # MAIN
-################################
+################
 
+#Comprobamos los parámetros
+# [ $# -gt 2 ] && errorParametros
+[ $# -gt 2 ] && error 1
+# [ $# -eq 0 ] && errorParametros
+[ $# -eq 0 ] && error 2
 
-[ $# -gt 2 ] && errorNumParametros
-[ $# -eq 0 ] && errorNumParametros
-
-#sabemos que recibe uno o dos parámetros
 [ $# -eq 1 ] && [ "$1" == "--help" ] && ayuda
-
 [ $# -eq 1 ] && [ "$1" == "lista" ] && lista
-
 [ $# -eq 1 ] && [ "$1" == "borrar" ] && borrar
 
-[ $# -eq 1 ] && errorParametroIncorrecto
-
-[ $# -eq 2 ] && compruebaSiEsNumero $1
+[ $# -eq 1 ] && errorPrimerParametro $1
 
 
+if [ $# -eq 2 ];then
+  ./esNum $1
+  # [ $? -eq 1 ] && errorPrimerParametroNoEsUnNumero
+  [ $? -eq 1 ] && error 3
+fi
 
-echo "$1 $2" >> gastos.txt
+
+# Si llego aquí sé que se reciben dos parámetros y el primero es un número
+# echo $1 $2 >> gastos.txt
+printf "%7d € | $2\n" $1 >> gastos.txt
+
+# *Nota:* Si quieres que quede tabulado perfectamente puedes usar `printf "%7d" 245` en lugar de `echo "245"`. Eso añade los espacios necesarios para que el `245` ocupe 7 caracteres, es decir, imprimirá `    245`.
+
+
+
+
+
 
 # ```sh
 # $ ./controlgastos
@@ -121,3 +141,6 @@ echo "$1 $2" >> gastos.txt
 # $ ./controlgastos lista
 # No hay datos que mostrar.
 # ```
+
+
+

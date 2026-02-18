@@ -1,5 +1,10 @@
 #!/bin/bash
 
+
+#---------------------------------------
+# Parámetros de entrada
+#-----------------------------------------
+
 # Podemos recuperar los parámetros del script usando variables de entrada
 
 # echo $1 # primer parámetro
@@ -15,7 +20,7 @@
 # echo ${11}
 
 #---------------------------------------
-# Variables de entrada especiales
+# Variables especiales sobre los parámetros
 #-----------------------------------------
 
 echo $#   # número de parámetros

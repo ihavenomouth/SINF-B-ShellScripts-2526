@@ -41,3 +41,30 @@ cat filtros.sh | nl | head -n -20
 # muestra todas las líneas desde la 5 en adelante
 cat filtros.sh | nl | tail -n +5
 
+
+#------------------------
+# Contar las líneas: orden wc 
+#-------------------------------
+cat /etc/passwd | wc -l # cuenta el número de líneas
+
+
+
+#------------------------
+# Cortar columnas: orden cut 
+#-------------------------------
+echo "Holacaracolaaaa" | cut -c 1,3,5-9,12-
+#Hlcaracaaaa
+
+cat /etc/passwd | cut -d ":" -f 1,3
+cat /etc/passwd | cut -d ":" -f1 | sort
+
+#------------------------
+# Traducir: orden tr 
+#-------------------------------
+
+echo "hola caracola" | tr "aeiou" "12345"
+cat /etc/passwd | cut -d ":" -f 1,3 | tr ":" "\n"
+
+echo "Hola    cara     cola"  | tr -s " " # "Hola cara cola"
+
+

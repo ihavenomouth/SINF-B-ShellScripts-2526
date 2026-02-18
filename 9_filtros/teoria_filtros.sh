@@ -68,3 +68,8 @@ cat /etc/passwd | cut -d ":" -f 1,3 | tr ":" "\n"
 echo "Hola    cara     cola"  | tr -s " " # "Hola cara cola"
 
 
+#------------------------
+# Cortar líneas: orden grep
+#-------------------------------
+
+

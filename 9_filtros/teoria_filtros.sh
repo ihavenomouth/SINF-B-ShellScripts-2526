@@ -32,7 +32,7 @@ cat numeros.txt | head
 cat numeros.txt | tail
 
 #Muestra las 3 primeras (o últimas) líneas
-cat numeros.txt | head -n 3
+cat numeros.txt | head -n 3192.168.109.25
 cat numeros.txt | tail -n 3
 
 # muestra todas las líneas menos las últimas 20
@@ -71,5 +71,18 @@ echo "Hola    cara     cola"  | tr -s " " # "Hola cara cola"
 #------------------------
 # Cortar líneas: orden grep
 #-------------------------------
+# cat fichero | grep "patrón"
 
+# "patata"  --> todas las líneas que contengan patata
+# . --> simboliza cualquier caracter (/.-*€¶←øŋabcdef)
+# * --> 0 o N repeticiones de lo que tenga delante
+# ? --> 0 o 1 repeticiones de lo que tenga delante
+# () --> Agrupar
+# [aeo] --> uno de los caracteres que estén entre corchetes [0-9A-Za-z]
+# ^ --> representa el inicio de la línea
+# $ --> representa el final de la línea
+
+grep -v "patrón" # aquellas líneas que no cumplan el patrón
+grep -o "patrón" # aquellas partes de las líneas que cumplan el patrón
+grep -A3 -B2 "patrón" #aquellas líneas que cumplan el patrón y 2 anteriores (Before) y 3 posteriores (After)
 
